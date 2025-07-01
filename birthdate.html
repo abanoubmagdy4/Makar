@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مفاجأة عيد ميلاد 🎉</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* خلفية متحركة */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* الهيدر */
+        .header {
+            text-align: center;
+            padding: 100px 0 50px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            color: #fff;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbow 3s ease-in-out infinite;
+        }
+
+        @keyframes rainbow {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(180deg); }
+        }
+
+        .header p {
+            font-size: 1.5rem;
+            color: #fff;
+            opacity: 0.9;
+        }
+
+        /* قسم الصور */
+        .photos-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .photo-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.5s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .photo-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .photo-placeholder {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef, #fecfef);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: pulse 2s ease-in-out infinite;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .photo-card h3 {
+            color: #fff;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .photo-card p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* الرسالة الرئيسية */
+        .main-message {
+            text-align: center;
+            padding: 80px 0;
+            opacity: 0;
+            transform: scale(0.5);
+            animation: zoomIn 1s ease-out 2s forwards;
+        }
+
+        .main-message h2 {
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 2px 2px 8px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.2); }
+            to { text-shadow: 2px 2px 8px rgba(0,0,0,0.3), 0 0 30px rgba(255,255,255,0.4); }
+        }
+
+        .birthday-wish {
+            font-size: 2rem;
+            color: #ffd93d;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin: 20px 0;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* التأثيرات البصرية */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* الكونفيتي */
+        .confetti {
+            position: fixed;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff6b6b;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* الإعجابات المتطايرة */
+        .heart {
+            position: fixed;
+            color: #ff6b6b;
+            font-size: 2rem;
+            pointer-events: none;
+            animation: heart-float 3s ease-out forwards;
+            z-index: 1000;
+        }
+
+        @keyframes heart-float {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-200px) scale(0); opacity: 0; }
+        }
+
+        /* التحديثات المتجاوبة */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.5rem; }
+            .header p { font-size: 1.2rem; }
+            .main-message h2 { font-size: 2.5rem; }
+            .birthday-wish { font-size: 1.5rem; }
+            .photo-placeholder { width: 200px; height: 200px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- خلفية متحركة -->
+    <div class="floating-elements">
+        <div class="floating-shape" style="left: 10%; animation-delay: 0s; font-size: 2rem;">🎂</div>
+        <div class="floating-shape" style="left: 20%; animation-delay: 2s; font-size: 1.5rem;">🎉</div>
+        <div class="floating-shape" style="left: 30%; animation-delay: 4s; font-size: 2.5rem;">🎈</div>
+        <div class="floating-shape" style="left: 40%; animation-delay: 1s; font-size: 2rem;">🎁</div>
+        <div class="floating-shape" style="left: 50%; animation-delay: 3s; font-size: 1.8rem;">🌟</div>
+        <div class="floating-shape" style="left: 60%; animation-delay: 5s; font-size: 2.2rem;">🎊</div>
+        <div class="floating-shape" style="left: 70%; animation-delay: 1.5s; font-size: 1.7rem;">🎂</div>
+        <div class="floating-shape" style="left: 80%; animation-delay: 3.5s; font-size: 2rem;">🎉</div>
+        <div class="floating-shape" style="left: 90%; animation-delay: 0.5s; font-size: 1.9rem;">🎈</div>
+    </div>
+
+    <!-- الكونفيتي -->
+    <div class="confetti" id="confetti"></div>
+
+    <div class="container">
+        <!-- الهيدر -->
+        <div class="header">
+            <h1>🎉 مفاجأة عيد الميلاد 🎉</h1>
+            <p>استعد لمفاجأة جميلة يا أجمل أخ في الدنيا!</p>
+        </div>
+
+        <!-- قسم الصور -->
+        <div class="photos-section">
+            <div class="photo-card">
+                <div class="photo-placeholder">📸</div>
+                <h3>ذكريات جميلة</h3>
+                <p>هنا صورتنا الأولى اللي ماتتنساش، أيام الطفولة والضحك والفرح اللي كان يملأ البيت</p>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-placeholder">🤝</div>
+                <h3>الأخوة الحقيقية</h3>
+                <p>مهما كبرنا ومهما تغيرت الأيام، هتفضل أخويا وحبيبي وأقرب الناس لقلبي</p>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-placeholder">🎯</div>
+                <h3>لحظات مميزة</h3>
+                <p>كل لحظة قضيناها سوا، كل ضحكة وكل موقف، كله محفور في القلب للأبد</p>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-placeholder">🌟</div>
+                <h3>أحلام وطموحات</h3>
+                <p>عقبال ما تحقق كل أحلامك وتوصل لكل اللي بتتمناه، وأكون جنبك في كل خطوة</p>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-placeholder">❤️</div>
+                <h3>حب الأخوة</h3>
+                <p>مش بس أخ، ده أنت صديقي وسندي في الحياة، والله يخليك ليا يا أجمل أخ</p>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-placeholder">🎊</div>
+                <h3>عيد ميلاد سعيد</h3>
+                <p>النهاردة يومك يا حبيبي، وكل سنة وأنت الأقرب لقلبي والأغلى في حياتي</p>
+            </div>
+        </div>
+
+        <!-- الرسالة الرئيسية -->
+        <div class="main-message">
+            <h2>🎂 مفاجأة! 🎂</h2>
+            <div class="birthday-wish">
+                كل سنة وأنت طيب يا أحلى أخ في الدنيا!
+            </div>
+            <p style="color: #fff; font-size: 1.3rem; margin-top: 30px; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">
+                عقبال 100 سنة وأنت بألف خير وصحة وسعادة ❤️<br>
+                ربنا يحققلك كل اللي في قلبك ويسعدك زي ما بتسعدني كل يوم 🌟
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // انيميشن الكارد عند الاسكرول
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 200);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.photo-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // إنشاء الكونفيتي
+        function createConfetti() {
+            const confettiContainer = document.getElementById('confetti');
+            const colors = ['#ff6b6b', '#ffd93d', '#6bcf7f', '#4ecdc4', '#ff9a9e', '#fecfef'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confettiPiece = document.createElement('div');
+                confettiPiece.className = 'confetti-piece';
+                confettiPiece.style.left = Math.random() * 100 + '%';
+                confettiPiece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confettiPiece.style.animationDelay = Math.random() * 3 + 's';
+                confettiPiece.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                confettiContainer.appendChild(confettiPiece);
+            }
+        }
+
+        // إنشاء قلوب متطايرة عند النقر
+        document.addEventListener('click', (e) => {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = e.clientX + 'px';
+            heart.style.top = e.clientY + 'px';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 3000);
+        });
+
+        // بدء الكونفيتي
+        createConfetti();
+        
+        // إعادة إنشاء الكونفيتي كل 5 ثوان
+        setInterval(createConfetti, 5000);
+
+        // إضافة تأثير الهوفر للكاردز
+        document.querySelectorAll('.photo-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px) scale(1.05)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
